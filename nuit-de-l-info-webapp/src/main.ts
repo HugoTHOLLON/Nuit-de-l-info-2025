@@ -1,4 +1,6 @@
 import './assets/main.css'
+import 'bootswatch/dist/brite/bootstrap.min.css'
+import 'bootstrap'
 
 import { createApp } from 'vue'
 import App from './App.vue'
