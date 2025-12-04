@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
-import Chatbot from './components/chat/Chatbot.vue'
+import './components/chat/Chatbot.vue';
 </script>
 
 <template>
