@@ -1,0 +1,42 @@
+[
+    {
+        "type": "start",
+        "message": "Bonjour ! Comment puis-je aider ?"
+    },
+    {
+        "type": "start",
+        "message": "Bonjour ! Comment puis-je aider ? 2"
+    },
+    {
+        "type": "start",
+        "message": "Bonjour ! Comment puis-je aider ? 3" 
+    },
+    {
+        "type": "interrupt",
+        "message": "Bonjour ! Comment puis-je aider ?"
+    },
+    {
+        "type": "interrupt",
+        "message": "Bonjour ! Comment puis-je aider ?"
+    },
+    {
+        "type": "interrupt",
+        "message": "Bonjour ! Comment puis-je aider ?"
+    },
+    {
+        "type": "interrupt",
+        "message": "Bonjour ! Comment puis-je aider ?"
+    },
+    {
+        "type": "end",
+        "message": "Bonjour ! Comment puis-je aider ?"
+    },
+    {
+        "type": "end",
+        "message": "Bonjour ! Comment puis-je aider ?"
+    },
+    {
+        "type": "end",
+        "message": "Bonjour ! Comment puis-je aider ?"
+    }
+]
