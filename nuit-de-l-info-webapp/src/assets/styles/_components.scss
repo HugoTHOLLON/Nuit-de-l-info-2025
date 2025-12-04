@@ -1,0 +1,44 @@
+// File containing custom component styles.
+$c1: #1f67ae;
+$c2: #dc5ed4;
+$c3: #f99eb1;
+$c4: #fed464;
+
+// Backgrounds
+
+.bg-gradient-primary {
+  background: linear-gradient(-170deg, $c1, $c2 30%, $c3 80%, $c4 100%);
+}
+
+.bg-gradient-secondary {
+  background: linear-gradient(170deg, $c2, $c3, $c4);
+}
+
+// Buttons
+
+.btn-primary {
+  background: linear-gradient(170deg, $c2, $c3, $c4);
+}
+
+.btn-secondary {
+  background: linear-gradient(-20deg, #dc5ed4, #f99eb1);
+}
+
+// Texts
+
+@mixin gradient-text($gradient...) {
+  background: linear-gradient($gradient...);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+  width: fit-content;
+}
+
+.text-gradient-primary {
+  @include gradient-text(-125deg, $c1, $c2 30%, $c3 80%, $c4 100%);
+}
+
+.text-gradient-secondary {
+  @include gradient-text(125deg, $c2, $c3 80%, $c4 100%);
+}
