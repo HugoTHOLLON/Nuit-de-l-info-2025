@@ -2,9 +2,7 @@
 
 <template>
   <!-- Button -->
-  <button class="chat-button" @click="open = !open">
-    💬
-  </button>
+  <button class="chat-button" @click="open = !open">💬</button>
 
   <!-- Popup -->
   <transition name="fade">
@@ -15,8 +13,8 @@
       </div>
 
       <div class="chat-messages" ref="messagesBox">
-        <div 
-          v-for="m in messages" 
+        <div
+          v-for="m in messages"
           :key="m.id"
           :class="['chat-message', m.from === 'me' ? 'me' : 'them']"
         >
@@ -26,11 +24,7 @@
       </div>
 
       <form class="chat-input" @submit.prevent="send">
-        <input
-          v-model="draft"
-          type="text"
-          placeholder="Écrire un message..."
-        />
+        <input v-model="draft" type="text" placeholder="Écrire un message..." />
         <button :disabled="!draft.trim()">➤</button>
       </form>
     </div>
@@ -38,7 +32,6 @@
 </template>
 
 <script setup>
-
 import phrase from '@/assets/phrase.json'
 
 import { ref, nextTick } from 'vue'
@@ -46,11 +39,15 @@ import { ref, nextTick } from 'vue'
 const open = ref(false)
 const draft = ref('')
 
-const startPhrase = phrase.filter(startPhrase => startPhrase.type.includes("start"));
-
+const startPhrase = phrase.filter((startPhrase) => startPhrase.type.includes('start'))
 
 const messages = ref([
-  { id: 1, text: startPhrase[Math.floor(Math.random() * startPhrase.length)].message, from: 'them', ts: Date.now() }
+  {
+    id: 1,
+    text: startPhrase[Math.floor(Math.random() * startPhrase.length)].message,
+    from: 'them',
+    ts: Date.now(),
+  },
 ])
 
 const messagesBox = ref(null)
@@ -68,20 +65,23 @@ function send() {
     id: Date.now(),
     text: draft.value,
     from: 'me',
-    ts: Date.now()
+    ts: Date.now(),
   })
   draft.value = ''
   scrollToBottom()
 }
 
-function connectToGpt(){
+function connectToGpt() {}
 
-}
- 
-function interuptPlayer(){
-  open = true;
-  const interruptPhrase = phrase.filter(startPhrase => startPhrase.type.includes("interrupt"));
-  messages.push({id: 1, text: interruptPhrase[Math.floor(Math.random() * interruptPhrase.length)].message, from: 'them', ts: Date.now() });
+function interuptPlayer() {
+  open.value = true
+  const interruptPhrase = phrase.filter((startPhrase) => startPhrase.type.includes('interrupt'))
+  messages.push({
+    id: 1,
+    text: interruptPhrase[Math.floor(Math.random() * interruptPhrase.length)].message,
+    from: 'them',
+    ts: Date.now(),
+  })
 }
 
 function formatTime(ts) {
@@ -97,7 +97,7 @@ scrollToBottom()
   position: fixed;
   bottom: 20px;
   right: 20px;
-  background: #A2E436;
+  background: #a2e436;
   color: white;
   font-size: 22px;
   border-radius: 50%;
@@ -125,7 +125,7 @@ scrollToBottom()
 
 /* Header */
 .chat-header {
-  background: #A2E436;
+  background: #a2e436;
   color: white;
   padding: 12px;
   display: flex;
@@ -184,7 +184,7 @@ scrollToBottom()
   border: 1px solid #ccc;
 }
 .chat-input button {
-  background: #A2E436;
+  background: #a2e436;
   color: white;
   border: none;
   padding: 0 12px;
