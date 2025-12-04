@@ -45,3 +45,31 @@ Les élèves ont une valeur d'engagement, celle ci va affecter leur intérêt po
 #### Intérêt ####
 
 Les différents professeurs expriment un intérêt différent pour la démarche NIRD. Plus les salles de cours utilisés par le professeurs correspondent à son intérêt (par exemple, linux pour les profs intéressés, windows pour les profs peu intéressés), plus son cours est engageant pour  les élèves. L'intérêt est passivement affecté par la salle utilisé (l'exposition à des salles linux va lentement augmenter l'intérêt) ou par des évènements aléatoire ou déclenchés moyennant finance (webinaires par exemple)
+
+### Evenements aléatoires ###
+
+Au cours de la partie, certains évènements peuvent survenir.
+
+#### Matériel endommagé ####
+
+Parfois, du matériel est endommagé. Un PC aléatoire devient Hors service ou Hors d'usage. Plus l'engagement des élèves est faible, plus le risque qu'ils endommagent du matériel augmente.
+
+#### Windows update ####
+
+Une nouvelle version de windows sort, la précédente peut mettre à jour gratuitement, et celle encore avant perd la possibilité de mettre à jour gratuitement. Celle qui était à cette étape devient obsolète. (Exemple : windows 12 sort, windows 11 peut mettre à jour gratuitement, windows 10 doit désormais payer une license windows 11 pour mettre à jour et windows 7 devient obsolète.
+
+#### Evenement NIRD #### 
+
+Un évènement organisé par le commité NIRD est proposé et accessible à votre établissement. Vous pouvez y envoyer certains professeurs pour augmenter leur intérêt. Attention à ne pas trop en envoyer, si ils ne peuvent plus assurer les cours l'engagement des élèves va diminiuer.
+
+### Evenements déclenchés ###
+
+A tout moment, vous pouvez dépenser de l'argent pour organiser des évènements
+
+#### Activité pédagogique ####
+
+Augment ponctuellement l'engagement des élèves.
+
+#### Evenement NIRD #### 
+
+Similaire à l'évènement aléatoire, mais le malus financier remplace le malus d'engagement.
