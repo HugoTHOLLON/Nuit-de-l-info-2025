@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
+import Chatbot from './components/chat/Chatbot.vue';
 </script>
 
 <template>
@@ -42,6 +43,7 @@ import { RouterLink, RouterView } from 'vue-router'
   <footer class="container-fluid bg-dark d-flex flex-column align-items-center py-5 text-light">
     &copy; Some random copyright
   </footer>
+  <Chatbot />
 </template>
 
 <style>
