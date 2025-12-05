@@ -21,12 +21,13 @@ const router = createRouter({
           path: '/gameLoop',
           name: 'gameLoop',
           component: () => import('../game/gameLoop.vue'),
+          props: true
       },
       {
-      path: '/snake',
-      name: 'snake',
-      component: () => import('../components/snake/snake.vue')
-    }
+          path: '/login',
+          name: 'login',
+          component: () => import('../game/login.vue'),
+      }
   ],
 })
 

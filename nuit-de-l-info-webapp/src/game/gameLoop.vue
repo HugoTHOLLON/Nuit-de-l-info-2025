@@ -1,148 +1,163 @@
 <template>
-    <div>
-        <h1>Tycoon NIRD</h1>
-        <p>Année : {{ currentYear }}</p>
-        <p>Jour : {{ currentDay }}</p>
-        <p>Budget : €{{ budget.toFixed(2) }}</p>
-        <p>Engagement élèves : {{ engagement.toFixed(2) }}</p>
-        <p>Intérêt moyen des profs : {{ averageInterest.toFixed(2) }}</p>
-        <button @click="startGame">Démarrer le jeu</button>
-        <button @click="stopGame">Arrêter le jeu</button>
-    </div>
+  <div>
+    <h1>Tycoon NIRD</h1>
+    <p>User : {{ name }}</p>
+    <p>Année : {{ currentYear }}</p>
+    <p>Jour : {{ currentDay }}</p>
+    <p>Budget : €{{ budget.toFixed(2) }}</p>
+    <p>Engagement élèves : {{ engagement.toFixed(2) }}</p>
+    <p>Intérêt moyen des profs : {{ averageInterest.toFixed(2) }}</p>
+    <button @click="startGame">Démarrer le jeu</button>
+    <button @click="stopGame">Arrêter le jeu</button>
+  </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref, onMounted, onUnmounted } from 'vue';
+<script setup lang="ts">
+import { ref, onMounted, onUnmounted } from 'vue'
+import { useRoute } from 'vue-router'
+
+
+const name = ref('')
+
 
 interface PC {
-    id: number;
-    status: 'neuf' | 'obsolète' | 'hors-service' | 'hors-dusage';
-    os: 'Windows' | 'Linux';
+  id: number
+  status: 'neuf' | 'obsolète' | 'hors-service' | 'hors-dusage'
+  os: 'Windows 7' | 'Windows 10' | 'Windows 11' | 'Linux';
 }
 
 interface Professor {
-    id: number;
-    interest: number; // 0 à 100
+  id: number
+  interest: number // 0 à 100
 }
 
-export default defineComponent({
-    setup() {
-        // Variables de jeu
-        const currentYear = ref(0);
-        const currentDay = ref(1);
-        const budget = ref(10000);
-        const engagement = ref(10);
-        const averageInterest = ref(50);
-        const pcs = ref<PC[]>([]);
-        const professors = ref<Professor[]>([]);
-        let gameInterval: number | null = null;
+// Variables de jeu
+const currentYear = ref(0)
+const currentDay = ref(1)
+const budget = ref(10000)
+const engagement = ref(10)
+const averageInterest = ref(50)
+const pcs = ref<PC[]>([])
+const professors = ref<Professor[]>([])
+let gameInterval: number | null = null
 
-        const cycleDuration = 5 * 1000; // 10 secondes = 1 jour
-        const daysPerYear = 365;
+const cycleDuration = 5 * 1000 // 10 secondes = 1 jour
+const daysPerYear = 365
 
-        // Game loop
-        const gameLoop = () => {
-            console.log(`Jour ${currentDay.value}, Année ${currentYear.value}`);
+// Game loop
+function gameLoop() {
+  console.log(`Jour ${currentDay.value}, Année ${currentYear.value}`)
 
-            handleDailyEvents();
-            updatePCs();
-            updateEngagement();
-            updateProfInterest();
+  handleDailyEvents()
+  updatePCs()
+  updateEngagement()
+  updateProfInterest()
 
-            if (currentDay.value === daysPerYear) {
-                calculateAnnualSubventions();
-            }
+  if (currentDay.value === daysPerYear) {
+    calculateAnnualSubventions()
+  }
 
-            currentDay.value++;
-            if (currentDay.value > daysPerYear) {
-                currentDay.value = 1;
-                currentYear.value++;
-            }
+  currentDay.value++
+  if (currentDay.value > daysPerYear) {
+    currentDay.value = 1
+    currentYear.value++
+  }
 
-            checkGameOver();
-        };
+  checkGameOver()
+}
 
-        const handleDailyEvents = () => {
-            pcs.value.forEach((pc) => {
-                if (Math.random() > 0.995) { // 0.5% chance par jour
-                    pc.status = pc.status === 'hors-service' ? 'hors-dusage' : 'hors-service';
-                    console.log(`PC ${pc.id} endommagé !`);
-                }
-            });
-        };
+function handleDailyEvents() {
+  pcs.value.forEach((pc) => {
+    if (Math.random() > 0.995) {
+      // 0.5% chance par jour
+      pc.status = pc.status === 'hors-service' ? 'hors-dusage' : 'hors-service'
+      console.log(`PC ${pc.id} endommagé !`)
+    }
+  })
+}
 
-        const updatePCs = () => {
-            pcs.value.forEach((pc) => {
-                if (pc.os === 'Windows' && pc.status === 'obsolète') {
-                    engagement.value -= 0.05;
-                }
-                if (pc.os === 'Linux' && pc.status === 'neuf') {
-                    engagement.value += 0.05;
-                }
-            });
-            engagement.value = Math.max(0, engagement.value);
-        };
+const createBeginningPC = (id?: number): PC => {
+  const windowsVersions = ['Windows 7', 'Windows 10', 'Windows 11'] as const;
+  const os = windowsVersions[Math.floor(Math.random() * windowsVersions.length)] as PC['os'];
+  const newPC: PC = {
+    id: id ?? (pcs.value.length + 1),
+    status: 'neuf',
+    os: os,
+  };
+  console.log(`Achat d'un PC ${os} (ID: ${newPC.id})`);
+  return newPC;
+};
 
-        const updateEngagement = () => {
-            const totalInterest = professors.value.reduce((sum, prof) => sum + prof.interest, 0);
-            averageInterest.value = totalInterest / professors.value.length;
-        };
+function updatePCs() {
+  pcs.value.forEach((pc) => {
+    if (String(pc.os).startsWith('Windows') && pc.status === 'obsolète') {
+      engagement.value -= 0.05
+    }
+    if (pc.os === 'Linux' && pc.status === 'neuf') {
+      engagement.value += 0.05
+    }
+  })
+  engagement.value = Math.max(0, engagement.value)
+}
 
-        const updateProfInterest = () => {
-            professors.value.forEach((prof) => {
-                const linuxExposure = pcs.value.filter(pc => pc.os === 'Linux' && pc.status === 'neuf').length;
-                prof.interest += linuxExposure * 0.01; // petit boost quotidien
-                prof.interest = Math.min(100, prof.interest); // max 100
-            });
-        };
+function updateEngagement() {
+  const totalInterest = professors.value.reduce((sum, prof) => sum + prof.interest, 0)
+  averageInterest.value = totalInterest / professors.value.length
+}
 
-        const calculateAnnualSubventions = () => {
-            const base = 1000;
-            const subvention = base + engagement.value * 10 + averageInterest.value * 5;
-            budget.value += subvention;
-            console.log(`Subventions annuelles reçues : €${subvention.toFixed(2)}`);
-        };
+function updateProfInterest() {
+  professors.value.forEach((prof) => {
+    const linuxExposure = pcs.value.filter((pc) => pc.os === 'Linux' && pc.status === 'neuf').length
+    prof.interest += linuxExposure * 0.01 // petit boost quotidien
+    prof.interest = Math.min(100, prof.interest) // max 100
+  })
+}
 
-        const checkGameOver = () => {
-            if (budget.value <= 0) {
-                stopGame();
-                alert("Game Over : budget épuisé !");
-            }
-        };
+function calculateAnnualSubventions() {
+  const base = 1000
+  const subvention = base + engagement.value * 10 + averageInterest.value * 5
+  budget.value += subvention
+  console.log(`Subventions annuelles reçues : €${subvention.toFixed(2)}`)
+}
 
-        const startGame = () => {
-            if (gameInterval) return;
-            gameInterval = window.setInterval(gameLoop, cycleDuration);
-        };
-        const stopGame = () => {
-            if (gameInterval) {
-                clearInterval(gameInterval);
-                gameInterval = null;
-            }
-        };
-        onMounted(() => {
-            pcs.value = [
-                { id: 1, status: 'neuf', os: 'Windows' },
-                { id: 2, status: 'obsolète', os: 'Windows' },
-                { id: 3, status: 'hors-service', os: 'Linux' },
-            ];
-            professors.value = [
-                { id: 1, interest: 50 },
-                { id: 2, interest: 40 },
-            ];
-        });
+function checkGameOver() {
+  if (budget.value <= 0) {
+    stopGame()
+    alert('Game Over : budget épuisé !')
+  }
+}
 
-        onUnmounted(() => stopGame());
+function startGame() {
+  if (gameInterval) return
+  gameInterval = window.setInterval(gameLoop, cycleDuration)
+}
 
-        return {
-            currentYear,
-            currentDay,
-            budget,
-            engagement,
-            averageInterest,
-            startGame,
-            stopGame,
-        };
-    },
-});
+function stopGame() {
+  if (gameInterval) {
+    clearInterval(gameInterval)
+    gameInterval = null
+  }
+}
+
+onMounted(() => {
+  pcs.value = Array.from({ length: 50 }, (_, i) => {
+    return createBeginningPC(i + 1);
+  });
+  professors.value = [
+    { id: 1, interest: 50 },
+    { id: 2, interest: 40 },
+  ]
+
+  const route = useRoute()
+    const emailQuery = route.query.name
+  if (typeof emailQuery === 'string') {
+    name.value = emailQuery
+  } else if (Array.isArray(emailQuery)) {
+    name.value = emailQuery[0] || ''
+  } else {
+    name.value = ''
+  }
+})
+
+onUnmounted(() => stopGame())
 </script>

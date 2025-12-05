@@ -31,7 +31,7 @@ import Chatbot from './components/chat/Chatbot.vue'
               <RouterLink to="/about" class="nav-link" active-class="active">About</RouterLink>
             </li>
             <li>
-              <RouterLink to="/gameLoop" class="nav-link" active-class="active">GameLoop</RouterLink>
+              <RouterLink to="/login" class="nav-link" active-class="active">Jeu</RouterLink>
             </li>
               <li>
               <RouterLink to="/snake" class="nav-link" active-class="active">Snake</RouterLink>
@@ -65,6 +65,9 @@ import Chatbot from './components/chat/Chatbot.vue'
   margin-left: 20px;
 }
 
+/* header {
+  padding-top: 6rem;
+} */
 main {
   padding: 30px;
   padding-top: 150px;
