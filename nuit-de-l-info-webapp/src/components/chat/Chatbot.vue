@@ -8,7 +8,7 @@
   <transition name="fade">
     <div v-if="open" class="card chat-bot">
       <div class="card-header chat-header bg-gradient-secondary fw-bold">
-        <span>Nietzsche de Vivaris</span>
+        <span>🐈‍⬛Charistote de Vivaris🐈‍⬛</span>
         <button class="close-btn" @click="open = false">×</button>
       </div>
 
