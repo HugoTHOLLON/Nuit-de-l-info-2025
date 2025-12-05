@@ -8,7 +8,7 @@
   <transition name="fade">
     <div v-if="open" class="card chat-bot">
       <div class="card-header chat-header bg-gradient-secondary fw-bold">
-        <span>Theo (trouver un nom)</span>
+        <span>Nietzsche de Vivaris</span>
         <button class="close-btn" @click="open = false">×</button>
       </div>
 
@@ -20,7 +20,10 @@
         >
           <div class="bubble">
             <template v-if="m.text === '...'">
-              <span class="typing"> <span></span><span></span><span></span> </span>
+              <span class="typing"><span></span><span></span><span></span></span>
+            </template>
+            <template v-else-if="m.from === 'them'">
+              <div v-html="renderMarkdown(m.text)"></div>
             </template>
             <template v-else>
               {{ m.text }}
@@ -42,6 +45,7 @@
 import phrase from '@/assets/phrase.json'
 
 import { ref, nextTick } from 'vue'
+import { marked } from 'marked'
 
 type Phrase = {
   type: string
@@ -70,6 +74,10 @@ function randomMessageFrom(list: Phrase[], fallback = '...'): string {
   if (!list || list.length === 0) return fallback
   const idx = Math.floor(Math.random() * list.length)
   return list[idx]?.message ?? fallback
+}
+
+function renderMarkdown(text: string) {
+  return marked.parse(text)
 }
 
 const messages = ref<Message[]>([
