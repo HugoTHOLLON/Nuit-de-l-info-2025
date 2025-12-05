@@ -17,22 +17,22 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       component: () => import('../views/AboutView.vue'),
     },
-      {
-          path: '/gameLoop',
-          name: 'gameLoop',
-          component: () => import('../game/gameLoop.vue'),
-          props: true
-      },
-      {
-          path: '/login',
-          name: 'login',
-          component: () => import('../game/login.vue'),
-      },
-      {
+    {
+      path: '/gameLoop',
+      name: 'gameLoop',
+      component: () => import('../game/gameLoop.vue'),
+      props: true,
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: () => import('../game/login.vue'),
+    },
+    {
       path: '/snake',
       name: 'snake',
-      component: () => import('../components/snake/snake.vue')
-    }
+      component: () => import('../components/snake/snake.vue'),
+    },
   ],
 })
 

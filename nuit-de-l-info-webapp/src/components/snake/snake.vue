@@ -1,12 +1,3 @@
-
-<template>
-  <div id="snake-div">
-    <p>Point : {{score}}</p>
-
-    <canvas ref="canvas" id="snake" :width="width * cellSize" :height="height * cellSize"></canvas>
-  </div>
-</template>
-
 <script setup lang="ts">
 import { ref, defineProps, onMounted, onBeforeUnmount, h } from 'vue'
 
@@ -45,17 +36,17 @@ function clear() {
 function drawGrid() {
   if (!boardContext.value) return
   const ctx = boardContext.value
-  
+
   ctx.strokeStyle = '#ddd'
   ctx.lineWidth = 1
-  
+
   for (let x = 0; x <= width.value; x++) {
     ctx.beginPath()
     ctx.moveTo(x * cellSize.value, 0)
     ctx.lineTo(x * cellSize.value, height.value * cellSize.value)
     ctx.stroke()
   }
-  
+
   for (let y = 0; y <= height.value; y++) {
     ctx.beginPath()
     ctx.moveTo(0, y * cellSize.value)
@@ -63,7 +54,6 @@ function drawGrid() {
     ctx.stroke()
   }
 }
-
 
 function drawGame() {
   if (!boardContext.value) return
@@ -77,7 +67,6 @@ function drawGame() {
     const p = snake.value[i]
     if (!p) continue
     ctx.fillRect(p.x * cellSize.value, p.y * cellSize.value, cellSize.value, cellSize.value)
-  
   }
 
   const head = snake.value[0]
@@ -88,7 +77,12 @@ function drawGame() {
 
   if (food.value) {
     ctx.fillStyle = 'red'
-    ctx.fillRect(food.value.x * cellSize.value, food.value.y * cellSize.value, cellSize.value, cellSize.value)
+    ctx.fillRect(
+      food.value.x * cellSize.value,
+      food.value.y * cellSize.value,
+      cellSize.value,
+      cellSize.value,
+    )
   }
 
   if (isPaused.value) {
@@ -131,9 +125,9 @@ function nextMove() {
 
   snake.value.unshift(newHead)
 
-  if(newHead.x < 0  || newHead.x >= width.value || newHead.y < 0 || newHead.y >= height.value){
+  if (newHead.x < 0 || newHead.x >= width.value || newHead.y < 0 || newHead.y >= height.value) {
     resetGame()
-    window.alert("Le serpent est mort");
+    window.alert('Le serpent est mort')
     return
   }
 
@@ -149,7 +143,7 @@ function nextMove() {
 
   if (food.value && newHead.x === food.value.x && newHead.y === food.value.y) {
     moveFoodToFreePlace()
-    score.value = score.value +1
+    score.value = score.value + 1
   } else {
     snake.value.pop()
   }
@@ -165,17 +159,17 @@ function togglePause() {
 function onKeyPress(event: KeyboardEvent) {
   const key = event.keyCode
 
-  if (key === 27 || key === 32){
+  if (key === 27 || key === 32) {
     togglePause()
     event.preventDefault()
     return
   }
 
-  if(isPaused.value){
+  if (isPaused.value) {
     return
   }
 
-  const newDirection = directions.find(c => c.keyCode === key)
+  const newDirection = directions.find((c) => c.keyCode === key)
   if (!newDirection) return
 
   const current = nextDirection.value
@@ -220,12 +214,34 @@ onBeforeUnmount(() => {
 })
 </script>
 
+<template>
+  <div id="snake-div">
+    <h1 class="text-gradient-primary fw-bold">Félicitation pour être arrivé jusqu'ici !</h1>
+    <h2 class="text-gradient-secondary">Vous avez trouvé le SNAKE secret</h2>
+    <h4>
+      Utilisez les flèches directionnelles <span class="text-gradient-secondary">🡄🡅🡇🡆</span> pour
+      vous déplacer
+    </h4>
+    <h4>
+      Mettez sur pause en appuyant sur <span class="text-gradient-secondary">ECHAP</span> ou
+      <span class="text-gradient-secondary">ESPACE</span>
+    </h4>
+
+    <br />
+    <h1>Point : {{ score }}</h1>
+    <br />
+
+    <canvas ref="canvas" id="snake" :width="width * cellSize" :height="height * cellSize"></canvas>
+  </div>
+</template>
+
 <style scoped>
 #snake-div {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  flex-direction: column;
+  /* height: 100vh; */
 }
 
 #snake {

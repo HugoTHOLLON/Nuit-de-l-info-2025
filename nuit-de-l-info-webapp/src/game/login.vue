@@ -8,14 +8,12 @@
       </div>
       <button type="submit">Se connecter</button>
     </form>
-    <GameCube />
   </div>
 </template>
 
 <script setup lang="ts">
 import router from '@/router'
 import { ref } from 'vue'
-import GameCube from '@/components/konami-code/GameCube.vue'
 
 const email = ref('')
 

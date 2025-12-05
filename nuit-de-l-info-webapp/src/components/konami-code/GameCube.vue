@@ -2,6 +2,7 @@
 import { Input } from './Inputs'
 import { ref } from 'vue'
 import NesController from './NesController.vue'
+import router from '@/router'
 
 const no = Input.Nothing
 const inputs = ref<Array<Input>>([no, no, no, no, no, no, no, no, no, no, no])
@@ -19,6 +20,7 @@ function addInput(input: Input) {
   if (currentInputIndex.value > 10) {
     if (codeValid()) {
       // TODO redirection
+      router.push('/snake')
     } else {
       clearArray()
     }
