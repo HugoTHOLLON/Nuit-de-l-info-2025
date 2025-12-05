@@ -37,13 +37,9 @@
     <!-- <button type="button" class="btn bg-gradient-primary text-light fw-bold">Just Btn</button>
     <button type="button" class="btn btn-primary">Primary</button>
     <button type="button" class="btn btn-secondary">Secondary</button> -->
-    <button type="button" class="btn btn-success btn-lg" id="play">Jouer !</button>
-    <!-- <button type="button" class="btn btn-info">Info</button>
-    <button type="button" class="btn btn-warning">Warning</button>
-    <button type="button" class="btn btn-danger">Danger</button>
-    <button type="button" class="btn btn-light">Light</button>
-    <button type="button" class="btn btn-dark">Dark</button>
-    <button type="button" class="btn btn-link">Link</button> -->
+    <RouterLink to="/login" class="btn btn-success btn-lg" id="play" active-class="active"
+      >Jouer !</RouterLink
+    >
   </div>
 </template>
 
@@ -52,7 +48,7 @@
   margin: 15px;
 }
 
-button#play {
+#play {
   font-size: 2rem;
 }
 

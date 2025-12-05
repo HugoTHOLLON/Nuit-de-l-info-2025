@@ -1,12 +1,12 @@
 <template>
-  <div>
-    <h1>Connecte TOI</h1>
-    <form @submit.prevent="login">
+  <div class="d-flex flex-column gap-3">
+    <h1 class="text-gradient-primary">Saisir votre nom pour démarrer le jeu</h1>
+    <form @submit.prevent="login" class="d-flex flex-column gap-3">
       <div>
-        <label for="email">Name :</label>
-        <input type="text" id="email" v-model="email" required />
+        <label for="email" style="font-size: 1.3rem">Nom : </label>
+        <input class="w-100" type="text" id="email" v-model="email" required />
       </div>
-      <button type="submit">Se connecter</button>
+      <button type="submit" class="btn btn-outline-primary">Se connecter</button>
     </form>
   </div>
 </template>
@@ -21,3 +21,10 @@ const login = () => {
   router.push({ path: '/gameLoop', query: { name: email.value } })
 }
 </script>
+
+<style scoped>
+#email {
+  padding: 5px;
+  font-size: 1rem;
+}
+</style>

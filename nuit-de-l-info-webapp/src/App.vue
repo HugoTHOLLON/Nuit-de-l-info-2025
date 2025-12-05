@@ -44,7 +44,7 @@ import Chatbot from './components/chat/Chatbot.vue'
   </main>
 
   <footer class="container-fluid bg-dark d-flex flex-column align-items-center py-5 text-light">
-    &copy; Some random copyright
+    Tout libre de droit
   </footer>
   <Chatbot />
 </template>

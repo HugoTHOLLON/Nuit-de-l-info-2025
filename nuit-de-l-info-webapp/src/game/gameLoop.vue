@@ -1,14 +1,16 @@
 <template>
-  <div>
-    <h1>Tycoon NIRD</h1>
-    <p>User : {{ name }}</p>
-    <p>Année : {{ currentYear }}</p>
-    <p>Jour : {{ currentDay }}</p>
-    <p>Budget : €{{ budget.toFixed(2) }}</p>
-    <p>Engagement élèves : {{ engagement.toFixed(2) }}</p>
-    <p>Intérêt moyen des profs : {{ averageInterest.toFixed(2) }}</p>
-    <button @click="startGame">Démarrer le jeu</button>
-    <button @click="stopGame">Arrêter le jeu</button>
+  <div class="d-flex flex-column align-items-center">
+    <h1 class="text-gradient-primary fw-bold">Tycoon NIRD</h1>
+    <p><b>User :</b> {{ name }}</p>
+    <p><b>Année :</b> {{ currentYear }}</p>
+    <p><b>Jour :</b> {{ currentDay }}</p>
+    <p><b>Budget :</b> €{{ budget.toFixed(2) }}</p>
+    <p><b>Engagement élèves :</b> {{ engagement.toFixed(2) }}</p>
+    <p><b>Intérêt moyen des profs :</b> {{ averageInterest.toFixed(2) }}</p>
+    <div class="mt-3 d-flex flex-row gap-3">
+      <button @click="startGame" class="btn btn-success">Démarrer le jeu</button>
+      <button @click="stopGame" class="btn btn-danger">Arrêter le jeu</button>
+    </div>
   </div>
 </template>
 
@@ -16,14 +18,12 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useRoute } from 'vue-router'
 
-
 const name = ref('')
-
 
 interface PC {
   id: number
   status: 'neuf' | 'obsolète' | 'hors-service' | 'hors-dusage'
-  os: 'Windows 7' | 'Windows 10' | 'Windows 11' | 'Linux';
+  os: 'Windows 7' | 'Windows 10' | 'Windows 11' | 'Linux'
 }
 
 interface Professor {
@@ -77,16 +77,16 @@ function handleDailyEvents() {
 }
 
 const createBeginningPC = (id?: number): PC => {
-  const windowsVersions = ['Windows 7', 'Windows 10', 'Windows 11'] as const;
-  const os = windowsVersions[Math.floor(Math.random() * windowsVersions.length)] as PC['os'];
+  const windowsVersions = ['Windows 7', 'Windows 10', 'Windows 11'] as const
+  const os = windowsVersions[Math.floor(Math.random() * windowsVersions.length)] as PC['os']
   const newPC: PC = {
-    id: id ?? (pcs.value.length + 1),
+    id: id ?? pcs.value.length + 1,
     status: 'neuf',
     os: os,
-  };
-  console.log(`Achat d'un PC ${os} (ID: ${newPC.id})`);
-  return newPC;
-};
+  }
+  console.log(`Achat d'un PC ${os} (ID: ${newPC.id})`)
+  return newPC
+}
 
 function updatePCs() {
   pcs.value.forEach((pc) => {
@@ -141,15 +141,15 @@ function stopGame() {
 
 onMounted(() => {
   pcs.value = Array.from({ length: 50 }, (_, i) => {
-    return createBeginningPC(i + 1);
-  });
+    return createBeginningPC(i + 1)
+  })
   professors.value = [
     { id: 1, interest: 50 },
     { id: 2, interest: 40 },
   ]
 
   const route = useRoute()
-    const emailQuery = route.query.name
+  const emailQuery = route.query.name
   if (typeof emailQuery === 'string') {
     name.value = emailQuery
   } else if (Array.isArray(emailQuery)) {
