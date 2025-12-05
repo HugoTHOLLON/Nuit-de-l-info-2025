@@ -27,7 +27,12 @@ const router = createRouter({
           path: '/login',
           name: 'login',
           component: () => import('../game/login.vue'),
-      }
+      },
+      {
+      path: '/snake',
+      name: 'snake',
+      component: () => import('../components/snake/snake.vue')
+    }
   ],
 })
 
