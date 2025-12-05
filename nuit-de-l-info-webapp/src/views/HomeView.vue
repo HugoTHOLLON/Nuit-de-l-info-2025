@@ -2,7 +2,7 @@
 
 <template>
   <div class="row g-3">
-    <div class="col-sm-8 d-flex flex-column gap-3">
+    <div class="col-sm-6">
       <div class="card">
         <div class="card-header bg-gradient-primary fw-bold">Synopsis</div>
         <div class="card-body">
@@ -16,7 +16,9 @@
           environnement de travail pour les professeurs.
         </div>
       </div>
+    </div>
 
+    <div class="col-sm-6">
       <div class="card">
         <div class="card-header bg-gradient-primary fw-bold">Règles</div>
         <div class="card-body">

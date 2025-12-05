@@ -499,4 +499,8 @@ onBeforeUnmount(() => {
   </svg>
 </template>
 
-<style></style>
+<style>
+svg {
+  max-width: 100%;
+}
+</style>

@@ -25,10 +25,10 @@ import Chatbot from './components/chat/Chatbot.vue'
         <div class="collapse navbar-collapse" id="navbarElements">
           <ul class="navbar-nav me-auto gap-1">
             <li class="nav-item">
-              <RouterLink to="/" class="nav-link" active-class="active">Home</RouterLink>
+              <RouterLink to="/" class="nav-link" active-class="active">Accueil</RouterLink>
             </li>
             <li class="nav-item">
-              <RouterLink to="/about" class="nav-link" active-class="active">About</RouterLink>
+              <RouterLink to="/about" class="nav-link" active-class="active">À propos</RouterLink>
             </li>
             <li>
               <RouterLink to="/login" class="nav-link" active-class="active">Jeu</RouterLink>
@@ -62,9 +62,6 @@ import Chatbot from './components/chat/Chatbot.vue'
   margin-left: 20px;
 }
 
-/* header {
-  padding-top: 6rem;
-} */
 main {
   padding: 30px;
   padding-top: 150px;

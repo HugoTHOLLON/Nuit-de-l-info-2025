@@ -1,26 +1,24 @@
 <script setup lang="ts">
-import GameCube from '@/components/konami-code/GameCube.vue'
-</script>
-
-<template>
-  <div class="back">
-    <div
-      v-for="(dialogue, index) in dialogues"
-      :key="index"
-      :class="dialogue.side === 'right' ? 'eight-bit-right' : 'eight-bit-left'"
-    >
-      <img :src="dialogue.side === 'right' ? luigi : mario" alt="Avatar" class="avatar" />
-
-      <div :class="dialogue.side" v-html="dialogue.text"></div>
-    </div>
-  </div>
-</template>
-
-<script setup>
 import luigi from '@/assets/luigi.webp'
 import mario from '@/assets/mario.webp'
+import { onBeforeUnmount, onMounted, ref } from 'vue'
+import GameCube from '@/components/konami-code/GameCube.vue'
 
-const dialogues = [
+onMounted(() => {
+  const main = document.querySelector('main')
+  if (!main?.classList.contains('background-dark')) {
+    main?.classList.add('background-dark')
+  }
+})
+
+onBeforeUnmount(() => {
+  const main = document.querySelector('main')
+  if (main?.classList.contains('background-dark')) {
+    main?.classList.remove('background-dark')
+  }
+})
+
+const dialogues = ref([
   { side: 'right', text: 'Quel est l’objectif principal de la démarche NIRD ?' },
   {
     side: 'left',
@@ -44,27 +42,59 @@ const dialogues = [
   { side: 'right', text: 'Comment peut-on rejoindre ou soutenir NIRD ?' },
   {
     side: 'left',
-    text: "En visitant l’onglet <a href='https://edurl.fr/tchap-demarche-nird' target='_blank' color='#970404'>“Nous rejoindre”</a> pour accéder aux forums, obtenir plus d’informations et découvrir comment agir pour intégrer son école dans la démarche.",
+    text: "En visitant l’onglet <a href='https://edurl.fr/tchap-demarche-nird' target='_blank'>“Nous rejoindre”</a> pour accéder aux forums, obtenir plus d’informations et découvrir comment agir pour intégrer son école dans la démarche.",
   },
-]
+])
 </script>
+
+<template>
+  <div class="back">
+    <h1>À propos de la démarche NIRD</h1>
+    <h2>(Numérique Inclusif Responsable Durable)</h2>
+    <div
+      v-for="(dialogue, index) in dialogues"
+      :key="index"
+      :class="dialogue.side === 'right' ? 'eight-bit-right' : 'eight-bit-left'"
+    >
+      <img :src="dialogue.side === 'right' ? luigi : mario" alt="Avatar" class="avatar" />
+
+      <div :class="dialogue.side" v-html="dialogue.text"></div>
+    </div>
+  </div>
+  <div class="game-cube">
+    <GameCube />
+  </div>
+</template>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
+:root {
+  --green-color: #28a428;
+  --red-color: #e34242;
+}
+
+main.background-dark {
+  background-color: #282828;
+}
+
 .back {
   background-color: #282828;
-  color: #00ff00;
   font-family: 'Press Start 2P', monospace;
+  color: var(--green-color);
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 40px;
-  min-height: 100vh;
   box-sizing: border-box;
 }
 
 /* Texte */
+
+.back h2 {
+  margin-bottom: 40px;
+  color: var(--red-color);
+}
 
 .eight-bit-left,
 .eight-bit-right {
@@ -82,10 +112,10 @@ const dialogues = [
 .eight-bit-left {
   flex-direction: row-reverse;
   border-color: #970404;
-  color: #ad0707;
+  color: var(--red-color);
   margin-left: auto;
   text-align: left;
-  max-width: 70%;
+  max-width: 60%;
 }
 
 .eight-bit-right {
@@ -135,5 +165,10 @@ const dialogues = [
 .eight-bit-left .avatar {
   margin-right: -12px;
   transform: scaleX(-1);
+}
+
+.game-cube {
+  margin-top: 60px;
+  color: white;
 }
 </style>

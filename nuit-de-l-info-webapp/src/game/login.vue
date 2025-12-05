@@ -8,16 +8,18 @@
       </div>
       <button type="submit">Se connecter</button>
     </form>
+    <GameCube />
   </div>
 </template>
 
 <script setup lang="ts">
 import router from '@/router'
 import { ref } from 'vue'
+import GameCube from '@/components/konami-code/GameCube.vue'
 
 const email = ref('')
 
 const login = () => {
-    router.push({ path: '/gameLoop', query: { name: email.value } })
+  router.push({ path: '/gameLoop', query: { name: email.value } })
 }
-</script> 
+</script>
