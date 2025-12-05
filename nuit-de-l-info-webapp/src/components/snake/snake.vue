@@ -42,6 +42,29 @@ function clear() {
   boardContext.value.clearRect(0, 0, width.value * cellSize.value, height.value * cellSize.value)
 }
 
+function drawGrid() {
+  if (!boardContext.value) return
+  const ctx = boardContext.value
+  
+  ctx.strokeStyle = '#ddd'
+  ctx.lineWidth = 1
+  
+  for (let x = 0; x <= width.value; x++) {
+    ctx.beginPath()
+    ctx.moveTo(x * cellSize.value, 0)
+    ctx.lineTo(x * cellSize.value, height.value * cellSize.value)
+    ctx.stroke()
+  }
+  
+  for (let y = 0; y <= height.value; y++) {
+    ctx.beginPath()
+    ctx.moveTo(0, y * cellSize.value)
+    ctx.lineTo(width.value * cellSize.value, y * cellSize.value)
+    ctx.stroke()
+  }
+}
+
+
 function drawGame() {
   if (!boardContext.value) return
   const ctx = boardContext.value
