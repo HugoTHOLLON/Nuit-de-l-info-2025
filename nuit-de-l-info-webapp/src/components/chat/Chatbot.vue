@@ -8,7 +8,7 @@
   <transition name="fade">
     <div v-if="open" class="chat-container">
       <div class="chat-header">
-        <span>Theo (trouver un nom)</span>
+        <span>Nietzsche de Vivaris</span>
         <button class="close-btn" @click="open = false">×</button>
       </div>
 
@@ -18,7 +18,17 @@
           :key="m.id"
           :class="['chat-message', m.from === 'me' ? 'me' : 'them']"
         >
-          <div class="bubble">{{ m.text }}</div>
+          <div class="bubble">
+            <template v-if="m.text === '...'">
+              <span class="typing"><span></span><span></span><span></span></span>
+            </template>
+            <template v-else-if="m.from === 'them'">
+              <div v-html="renderMarkdown(m.text)"></div>
+            </template>
+            <template v-else>
+              {{ m.text }}
+            </template>
+          </div>
           <div class="time">{{ formatTime(m.ts) }}</div>
         </div>
       </div>
@@ -31,26 +41,55 @@
   </transition>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import phrase from '@/assets/phrase.json'
 
 import { ref, nextTick } from 'vue'
+import { marked } from 'marked'
 
-const open = ref(false)
-const draft = ref('')
+type Phrase = {
+  type: string
+  message: string
+}
 
-const startPhrase = phrase.filter((startPhrase) => startPhrase.type.includes('start'))
+type Message = {
+  id: number
+  text: string
+  from: 'me' | 'them'
+  ts: number
+}
 
-const messages = ref([
+const loading = ref(false)
+
+const phrases = phrase as Phrase[]
+
+const open = ref<boolean>(false)
+const draft = ref<string>('')
+
+const answer = ref<string | null>(null)
+
+const startPhrases = phrases.filter((p) => p.type.includes('start'))
+
+function randomMessageFrom(list: Phrase[], fallback = '...'): string {
+  if (!list || list.length === 0) return fallback
+  const idx = Math.floor(Math.random() * list.length)
+  return list[idx]?.message ?? fallback
+}
+
+function renderMarkdown(text: string) {
+  return marked.parse(text)
+}
+
+const messages = ref<Message[]>([
   {
-    id: 1,
-    text: startPhrase[Math.floor(Math.random() * startPhrase.length)].message,
+    id: Date.now(),
+    text: randomMessageFrom(startPhrases, 'Bonjour !'),
     from: 'them',
     ts: Date.now(),
   },
 ])
 
-const messagesBox = ref(null)
+const messagesBox = ref<HTMLElement | null>(null)
 
 function scrollToBottom() {
   nextTick(() => {
@@ -67,30 +106,69 @@ function send() {
     from: 'me',
     ts: Date.now(),
   })
+  const textToSend = draft.value
   draft.value = ''
+
+  const loadingMessage: Message = {
+    id: Date.now() + 1,
+    text: '...',
+    from: 'them',
+    ts: Date.now(),
+  }
+  messages.value.push(loadingMessage)
   scrollToBottom()
+
+  loading.value = true
+  ask(draft.value, loadingMessage.id)
 }
 
-function connectToGpt() {}
+async function ask(message: string, loadingId: number) {
+  const response = await fetch('https://chat.endide.com/api/chat/completions', {
+    method: 'POST',
+    headers: {
+      Authorization:
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjA3OWU3MDg4LWJjY2EtNDExNy1hOWE0LWYzY2Q1ODU4MGFlZSIsImV4cCI6MTc2NzMwNzQwOH0.QP_SwZo37i5P2KaqElyzfbE1UQ3DcXXjNBRmSs9lx-I',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      model: 'nuitinfo',
+      messages: [
+        {
+          role: 'user',
+          content: message,
+        },
+      ],
+    }),
+  })
 
-function interuptPlayer() {
+  const data = await response.json()
+  const text = data?.choices?.[0]?.message?.content ?? 'Aucune réponse'
+
+  const idx = messages.value.findIndex((m) => m.id === loadingId)
+  const loadingMsg = messages.value[idx]
+  if (loadingMsg) {
+    loadingMsg.text = text
+  }
+
+  loading.value = false
+}
+
+function interruptPlayer() {
   open.value = true
-  const interruptPhrase = phrase.filter((startPhrase) => startPhrase.type.includes('interrupt'))
-  messages.push({
-    id: 1,
-    text: interruptPhrase[Math.floor(Math.random() * interruptPhrase.length)].message,
+  const interruptPhrases = phrases.filter((p) => p.type.includes('interrupt'))
+  messages.value.push({
+    id: Date.now(),
+    text: randomMessageFrom(interruptPhrases, '...'),
     from: 'them',
     ts: Date.now(),
   })
+  scrollToBottom()
 }
 
-function formatTime(ts) {
+function formatTime(ts: number): string {
   return new Date(ts).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
 }
-
-scrollToBottom()
 </script>
-
 <style scoped>
 /* Floating button */
 .chat-button {
@@ -106,6 +184,39 @@ scrollToBottom()
   height: 56px;
   cursor: pointer;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+}
+
+.typing {
+  display: inline-block;
+  width: 20px;
+}
+
+.typing span {
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  margin: 0 1px;
+  background: #888;
+  border-radius: 50%;
+  animation: blink 1s infinite;
+}
+
+.typing span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.typing span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes blink {
+  0%,
+  80%,
+  100% {
+    opacity: 0;
+  }
+  40% {
+    opacity: 1;
+  }
 }
 
 /* Popup container */

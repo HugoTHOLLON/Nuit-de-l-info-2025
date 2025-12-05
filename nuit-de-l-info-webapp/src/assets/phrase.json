@@ -26,17 +26,5 @@
     {
         "type": "interrupt",
         "message": "Bonjour ! Comment puis-je aider ?"
-    },
-    {
-        "type": "end",
-        "message": "Bonjour ! Comment puis-je aider ?"
-    },
-    {
-        "type": "end",
-        "message": "Bonjour ! Comment puis-je aider ?"
-    },
-    {
-        "type": "end",
-        "message": "Bonjour ! Comment puis-je aider ?"
     }
 ]
