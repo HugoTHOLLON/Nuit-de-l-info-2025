@@ -70,11 +70,14 @@ function drawGame() {
   const ctx = boardContext.value
   clear()
 
+  drawGrid()
+
   ctx.fillStyle = 'black'
   for (let i = 1; i < snake.value.length; i++) {
     const p = snake.value[i]
     if (!p) continue
     ctx.fillRect(p.x * cellSize.value, p.y * cellSize.value, cellSize.value, cellSize.value)
+  
   }
 
   const head = snake.value[0]
