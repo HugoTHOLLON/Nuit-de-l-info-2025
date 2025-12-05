@@ -1,6 +1,7 @@
 <template>
   <div>
     <h1>Tycoon NIRD</h1>
+    <p>User : {{ name }}</p>
     <p>Année : {{ currentYear }}</p>
     <p>Jour : {{ currentDay }}</p>
     <p>Budget : €{{ budget.toFixed(2) }}</p>
@@ -13,6 +14,11 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
+import { useRoute } from 'vue-router'
+
+
+const name = ref('')
+
 
 interface PC {
   id: number
@@ -141,6 +147,16 @@ onMounted(() => {
     { id: 1, interest: 50 },
     { id: 2, interest: 40 },
   ]
+
+  const route = useRoute()
+    const emailQuery = route.query.name
+  if (typeof emailQuery === 'string') {
+    name.value = emailQuery
+  } else if (Array.isArray(emailQuery)) {
+    name.value = emailQuery[0] || ''
+  } else {
+    name.value = ''
+  }
 })
 
 onUnmounted(() => stopGame())

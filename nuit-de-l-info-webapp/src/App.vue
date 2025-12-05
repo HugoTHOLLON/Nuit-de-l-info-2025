@@ -1,21 +1,6 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 import Chatbot from './components/chat/Chatbot.vue'
-import { supabase } from './lib/supabaseClient'
-import { ref } from 'vue'
-
-/**const { data, error } = await supabase
-    .from('licence')
-    .select('*')
-
-    
-
-  if (error) {
-    console.error(error)
-    
-  }else{
-    console.log(data)
-  }**/
 </script>
 
 <template>
