@@ -6,6 +6,12 @@ const email = ref('')
 
 const login = () => {
     
+}
+
+
+
+
+const getStore = () => {
     
 }
 
