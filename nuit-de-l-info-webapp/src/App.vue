@@ -62,6 +62,9 @@ import Chatbot from './components/chat/Chatbot.vue'
   margin-left: 20px;
 }
 
+/* header {
+  padding-top: 6rem;
+} */
 main {
   padding: 30px;
   padding-top: 150px;

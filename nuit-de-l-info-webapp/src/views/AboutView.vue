@@ -53,14 +53,13 @@ const dialogues = [
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
 .back {
-  margin: 0;
   background-color: #282828;
   color: #00ff00;
   font-family: 'Press Start 2P', monospace;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
+  padding: 40px;
   min-height: 100vh;
   box-sizing: border-box;
 }
