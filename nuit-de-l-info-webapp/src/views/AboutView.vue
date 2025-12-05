@@ -16,7 +16,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import luigi from '@/assets/luigi.webp'
 import mario from '@/assets/mario.webp'
 

@@ -1,4 +1,4 @@
-```vue
+
 <template>
   <div id="snake-div">
     <p>Point : {{score}}</p>
