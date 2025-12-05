@@ -42,6 +42,12 @@ CREATE TABLE Score (
     FOREIGN KEY (idJoueur) REFERENCES Joueur(id)
 );
 
+CREATE TABLE ScoreSnake (
+    id SERIAL PRIMARY KEY,
+    nomJoueur VARCHAR(255),
+    score INT
+);
+
 CREATE TABLE Eleve (
     id SERIAL PRIMARY KEY,
     engagement INT
