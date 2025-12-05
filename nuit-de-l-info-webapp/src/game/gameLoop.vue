@@ -1,6 +1,7 @@
 <template>
   <div>
     <h1>Tycoon NIRD</h1>
+    <p>User : {{ name }}</p>
     <p>Année : {{ currentYear }}</p>
     <p>Jour : {{ currentDay }}</p>
     <p>Budget : €{{ budget.toFixed(2) }}</p>
@@ -13,11 +14,16 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
+import { useRoute } from 'vue-router'
+
+
+const name = ref('')
+
 
 interface PC {
   id: number
   status: 'neuf' | 'obsolète' | 'hors-service' | 'hors-dusage'
-  os: 'Windows' | 'Linux'
+  os: 'Windows 7' | 'Windows 10' | 'Windows 11' | 'Linux';
 }
 
 interface Professor {
@@ -70,9 +76,21 @@ function handleDailyEvents() {
   })
 }
 
+const createBeginningPC = (id?: number): PC => {
+  const windowsVersions = ['Windows 7', 'Windows 10', 'Windows 11'] as const;
+  const os = windowsVersions[Math.floor(Math.random() * windowsVersions.length)] as PC['os'];
+  const newPC: PC = {
+    id: id ?? (pcs.value.length + 1),
+    status: 'neuf',
+    os: os,
+  };
+  console.log(`Achat d'un PC ${os} (ID: ${newPC.id})`);
+  return newPC;
+};
+
 function updatePCs() {
   pcs.value.forEach((pc) => {
-    if (pc.os === 'Windows' && pc.status === 'obsolète') {
+    if (String(pc.os).startsWith('Windows') && pc.status === 'obsolète') {
       engagement.value -= 0.05
     }
     if (pc.os === 'Linux' && pc.status === 'neuf') {
@@ -122,15 +140,23 @@ function stopGame() {
 }
 
 onMounted(() => {
-  pcs.value = [
-    { id: 1, status: 'neuf', os: 'Windows' },
-    { id: 2, status: 'obsolète', os: 'Windows' },
-    { id: 3, status: 'hors-service', os: 'Linux' },
-  ]
+  pcs.value = Array.from({ length: 50 }, (_, i) => {
+    return createBeginningPC(i + 1);
+  });
   professors.value = [
     { id: 1, interest: 50 },
     { id: 2, interest: 40 },
   ]
+
+  const route = useRoute()
+    const emailQuery = route.query.name
+  if (typeof emailQuery === 'string') {
+    name.value = emailQuery
+  } else if (Array.isArray(emailQuery)) {
+    name.value = emailQuery[0] || ''
+  } else {
+    name.value = ''
+  }
 })
 
 onUnmounted(() => stopGame())
