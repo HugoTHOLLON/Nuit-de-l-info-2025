@@ -2,12 +2,12 @@
 
 <template>
   <!-- Button -->
-  <button class="chat-button" @click="open = !open">💬</button>
+  <button class="chat-button bg-gradient-secondary" @click="open = !open">💬</button>
 
   <!-- Popup -->
   <transition name="fade">
-    <div v-if="open" class="chat-container">
-      <div class="chat-header">
+    <div v-if="open" class="card chat-bot">
+      <div class="card-header chat-header bg-gradient-secondary fw-bold">
         <span>Theo (trouver un nom)</span>
         <button class="close-btn" @click="open = false">×</button>
       </div>
@@ -32,7 +32,7 @@
 
       <form class="chat-input" @submit.prevent="send">
         <input v-model="draft" type="text" placeholder="Écrire un message..." />
-        <button :disabled="!draft.trim()">➤</button>
+        <button :disabled="!draft.trim()" class="btn btn-secondary text-light">➤</button>
       </form>
     </div>
   </transition>
@@ -167,8 +167,6 @@ function formatTime(ts: number): string {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  background: #a2e436;
-  color: white;
   font-size: 22px;
   border-radius: 50%;
   border: none;
@@ -212,7 +210,7 @@ function formatTime(ts: number): string {
 }
 
 /* Popup container */
-.chat-container {
+.chat-bot {
   position: fixed;
   bottom: 90px;
   right: 20px;
@@ -228,8 +226,6 @@ function formatTime(ts: number): string {
 
 /* Header */
 .chat-header {
-  background: #a2e436;
-  color: white;
   padding: 12px;
   display: flex;
   justify-content: space-between;
@@ -238,7 +234,6 @@ function formatTime(ts: number): string {
 .close-btn {
   background: transparent;
   border: none;
-  color: white;
   font-size: 20px;
   cursor: pointer;
 }
@@ -287,8 +282,6 @@ function formatTime(ts: number): string {
   border: 1px solid #ccc;
 }
 .chat-input button {
-  background: #a2e436;
-  color: white;
   border: none;
   padding: 0 12px;
   border-radius: 8px;

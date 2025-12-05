@@ -24,6 +24,13 @@ $c4: #fed464;
   background: linear-gradient(-20deg, #dc5ed4, #f99eb1);
 }
 
+.btn:disabled {
+  filter: grayscale(1);
+}
+.btn:disabled:hover {
+  cursor: not-allowed;
+}
+
 // Texts
 
 @mixin gradient-text($gradient...) {
