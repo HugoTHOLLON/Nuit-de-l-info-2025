@@ -103,6 +103,7 @@ const dialogues = [
   object-fit: cover;
   box-shadow: 5px 0 0 0, 0 5px 0 0, -5px 0 0, 0 -5px 0 0;
   position: relative;
+  flex-shrink: 0;
 }
 
 .eight-bit-right .avatar {
@@ -111,5 +112,6 @@ const dialogues = [
 
 .eight-bit-left .avatar {
   margin-right: -12px;
+  transform: scaleX(-1);
 }
 </style>
