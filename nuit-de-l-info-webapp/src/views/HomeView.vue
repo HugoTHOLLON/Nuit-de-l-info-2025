@@ -47,7 +47,6 @@
 
 <style scoped>
 .button-holder {
-.button-holder {
   margin: 15px;
 }
 

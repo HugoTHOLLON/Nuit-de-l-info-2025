@@ -1,20 +1,17 @@
 <template>
   <div class="back">
-    
     <div 
       v-for="(dialogue, index) in dialogues" 
       :key="index" 
       :class="dialogue.side === 'right' ? 'eight-bit-right' : 'eight-bit-left'">
-    
+      
       <img 
         :src="dialogue.side === 'right' ? luigi : mario" 
         alt="Avatar" 
         class="avatar" 
       />
 
-      <div :class="dialogue.side">
-        {{ dialogue.text }}
-      </div>
+      <div :class="dialogue.side" v-html="dialogue.text"></div>
     </div>
   </div>
 </template>
@@ -33,9 +30,8 @@ const dialogues = [
   { side: "right", text: "À quoi sert le mini-jeu proposé ?" },
   { side: "left", text: "Il permet de comprendre de manière ludique les objectifs et les intérêts de la démarche NIRD." },
   { side: "right", text: "Comment peut-on rejoindre ou soutenir NIRD ?" },
-  { side: "left", text: "En visitant l’onglet “Nous rejoindre” pour accéder aux forums, obtenir plus d’informations et découvrir comment agir pour intégrer son école dans la démarche." }
+  { side: "left", text: "En visitant l’onglet <a href='https://edurl.fr/tchap-demarche-nird' target='_blank' color='#970404'>“Nous rejoindre”</a> pour accéder aux forums, obtenir plus d’informations et découvrir comment agir pour intégrer son école dans la démarche." }
 ];
-
 </script>
 
 <style>
@@ -55,6 +51,7 @@ const dialogues = [
 }
 
 /* Texte */
+
 .eight-bit-left,
 .eight-bit-right {
   display: flex;
@@ -89,8 +86,13 @@ const dialogues = [
 .eight-bit-left > .left,
 .eight-bit-right > .right {
   padding: 15px 25px;
-  box-shadow: 4px 0 0 0, 0 4px 0 0, -4px 0 0 0, 0 -4px 0 0;
+  box-shadow: 4px 0 0 0, 0 4px 0 0, -4px 0 0, 0 -4px 0 0;
   border-radius: 0;
+}
+
+.eight-bit-left a,
+.eight-bit-right a {
+  color: inherit;
 }
 
 /* Avatar */
@@ -99,7 +101,7 @@ const dialogues = [
   width: 40px;
   height: 40px;
   object-fit: cover;
-  box-shadow: 5px 0 0 0, 0 5px 0 0, -5px 0 0 0, 0 -5px 0 0;
+  box-shadow: 5px 0 0 0, 0 5px 0 0, -5px 0 0, 0 -5px 0 0;
   position: relative;
 }
 
