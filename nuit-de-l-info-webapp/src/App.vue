@@ -31,7 +31,7 @@ import Chatbot from './components/chat/Chatbot.vue'
               <RouterLink to="/about" class="nav-link" active-class="active">About</RouterLink>
             </li>
             <li>
-              <RouterLink to="/gameLoop" class="nav-link" active-class="active">GameLoop</RouterLink>
+              <RouterLink to="/login" class="nav-link" active-class="active">Jeu</RouterLink>
             </li>
           </ul>
         </div>

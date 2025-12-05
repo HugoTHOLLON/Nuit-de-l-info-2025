@@ -30,22 +30,6 @@
         </div>
       </div>
     </div>
-    <div class="col-sm-4">
-      <div class="card h-100">
-        <div class="card-header bg-gradient-secondary fw-bold">A propos de nous</div>
-        <div class="card-body">
-          La démarche NIRD vise à promouvoir l'indépendence et la responsabilité numérique scolaire.
-          C'est une initiative venant "d'en bas", et qui vise à convaincre "plus haut" de sa
-          pertinence. Il s'agit d'augmenter la durée de vie du matériel informatique, de se rendre
-          indépendent des entreprise big tech et d'inculquer de bonnes habitudes aux étudiants tout
-          en dégageant des fonds qui peuvent être investis dans une meilleure qualité de
-          l'éducation. Ici, vous pourrez jouer à un mini jeu pour comprendre de manière ludique les
-          objectifs et intérêts de cette démarche. N'hésitez pas à visiter l'onglet "Nous rejoindre"
-          pour accéder à nos forums, vous informer plus en détails et savoir comment VOUS pouvez
-          agir pour intégrer votre école à la démarche NIRD.
-        </div>
-      </div>
-    </div>
   </div>
   <div class="container-fluid justify-content-center d-flex button-holder">
     <!-- <button type="button" class="btn bg-gradient-primary text-light fw-bold">Just Btn</button>
